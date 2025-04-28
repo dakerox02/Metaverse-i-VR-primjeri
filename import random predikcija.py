@@ -1,19 +1,19 @@
 import random
 import time
 
-# Simulacija 360° scene podeljene na blokove
+# Simulacija 360° scene podijeljene na blokove
 scene_blocks = [i for i in range(0, 360, 30)]  # 12 blokova od po 30 stepeni
 
 def simulate_user_gaze(current_gaze=None):
-    """Simulira korisnički pogled - može malo da se pomeri od trenutnog."""
+    """Simulira korisnički pogled - može malo da se pomjeri od trenutnog."""
     if current_gaze is None:
         return random.choice(scene_blocks)
-    move = random.choice([-30, 0, 30])  # Korisnik može da ostane, okrene levo ili desno
+    move = random.choice([-30, 0, 30])  # Korisnik može da ostane, okrene lijevo ili desno
     new_gaze = (current_gaze + move) % 360
     return new_gaze
 
 def predict_next_gaze(current_gaze):
-    """Predviđa gde će korisnik sledeće gledati (najverovatnije ista ili bliska pozicija)."""
+    """Predviđa gdje će korisnik sljedeće gledati (najverovatnije ista ili bliska pozicija)."""
     prediction = (current_gaze + random.choice([0, 30])) % 360
     return prediction
 
@@ -38,7 +38,7 @@ def visualize_stream(scene_status):
 
 def simulate_streaming():
     current_gaze = None
-    for cycle in range(5):  # Simulacija 5 promena pogleda
+    for cycle in range(5):  # Simulacija 5 promjena pogleda
         current_gaze = simulate_user_gaze(current_gaze)
         predicted_gaze = predict_next_gaze(current_gaze)
 
