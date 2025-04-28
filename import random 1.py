@@ -1,11 +1,11 @@
 import random
 import time
 
-# Simulacija 360° scene podeljene na blokove
+# Simulacija 360° scene podijeljene na blokove
 scene_blocks = [i for i in range(0, 360, 30)]  # Na svakih 30 stepeni jedan blok (12 blokova)
 
 def simulate_user_gaze():
-    """Simulira nasumičan ugao gde korisnik trenutno gleda."""
+    """Simulira nasumičan ugao gdje korisnik trenutno gleda."""
     return random.choice(scene_blocks)
 
 def stream_block(block_angle, user_gaze):
@@ -17,7 +17,7 @@ def stream_block(block_angle, user_gaze):
         return f"Block {block_angle}° -> LOW quality"
 
 def simulate_streaming():
-    for _ in range(5):  # Simulacija 5 osvežavanja korisničkog pogleda
+    for _ in range(5):  # Simulacija 5 osvježavanja korisničkog pogleda
         user_gaze = simulate_user_gaze()
         print(f"\n[User gaze at {user_gaze}°]:")
         
@@ -25,7 +25,7 @@ def simulate_streaming():
             decision = stream_block(block, user_gaze)
             print(decision)
         
-        time.sleep(2)  # Pauza da simulira osvežavanje pogleda
+        time.sleep(2)  # Pauza da simulira osvježavanje pogleda
 
 # Pokreni simulaciju
 simulate_streaming()
