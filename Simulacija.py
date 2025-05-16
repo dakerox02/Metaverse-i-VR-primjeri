@@ -9,7 +9,7 @@ if image is None:
 screen_width = 1920
 screen_height = 1020
 
-# Ovdje smo zbog ogranicenja stavili da bi se fino na ekrana napravilo
+# Ovdje smo zbog ogranicenja stavili da bi se fino na ekran napravilo
 scale_x = screen_width / image.shape[1]
 scale_y = screen_height / image.shape[0]
 scale = min(scale_x, scale_y)
