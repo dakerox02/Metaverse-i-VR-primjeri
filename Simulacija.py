@@ -1,52 +1,48 @@
 import cv2
 import numpy as np
 
-# Učitaj originalnu sliku
 image = cv2.imread(r"C:\Users\PC\Documents\simulacija\panorama.jpg")
 if image is None:
     raise ValueError("Slika nije pronađena. Provjeri da li je putanja tačna.")
 
-# Postavi dimenzije ekrana (možeš podesiti prema rezoluciji tvog monitora)
+# Ovdje postavljamo dimenzije za ekran
 screen_width = 1920
 screen_height = 1020
 
-# Izračunaj skalu da cijela slika stane u ekran (proporcionalno)
+# Ovdje smo zbog ogranicenja stavili da bi se fino na ekrana napravilo
 scale_x = screen_width / image.shape[1]
 scale_y = screen_height / image.shape[0]
 scale = min(scale_x, scale_y)
 
-# Nova dimenzija slike
 new_width = int(image.shape[1] * scale)
 new_height = int(image.shape[0] * scale)
 
-# Skaliraj sliku
+# Ovdje smo skalirali sliku
 image = cv2.resize(image, (new_width, new_height))
 
-# Ažuriraj dimenzije slike
 height, width, _ = image.shape
 
-# Prilagodi viewport
+# Postavljamo viewport odnosno dio kroz koji ce slika biti izostrena
 viewport_width = int(300 * scale)
 viewport_height = int(300 * scale)
 
-# Početna pozicija viewporta (centar vertikalno, lijevo horizontalno)
+# Početna pozicija viewporta
 x_pos = 0
 y_pos = height // 2 - viewport_height // 2
 
-# Napravi zamućenu verziju slike
+#Pravimo sum na slici odnosno blurujemo
 blurred_image = cv2.GaussianBlur(image, (31, 31), 0)
 
 def apply_viewport_blending(x, y):
-    # Kopija zamućene slike
     blended = blurred_image.copy()
     
-    # Granice viewporta
+    # Granice viewporta da ne bi ispali iz slike
     x1 = min(max(0, x), width - viewport_width)
     x2 = x1 + viewport_width
     y1 = min(max(0, y), height - viewport_height)
     y2 = y1 + viewport_height
 
-    # Umetanje oštrog dijela slike u viewport
+    # Ubacujemo oštar dio slike unutar viewporta
     blended[y1:y2, x1:x2] = image[y1:y2, x1:x2]
     
     # Okvir viewporta
